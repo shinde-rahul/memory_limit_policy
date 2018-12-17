@@ -88,8 +88,9 @@ class MemoryLimitPolicySubscriber implements EventSubscriberInterface {
       );
       $response->headers->set(
         'memory_limit_policy_override',
-        $request->attributes->get('_memory_limit_policy_override')
+        (int) $request->attributes->get('_memory_limit_policy_override')
       );
+
     }
   }
 
