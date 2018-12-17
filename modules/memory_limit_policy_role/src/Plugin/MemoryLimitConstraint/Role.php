@@ -4,7 +4,7 @@ namespace Drupal\memory_limit_policy_role\Plugin\MemoryLimitConstraint;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\memory_limit_policy\MemoryLimitConstraintBase;
 use Drupal\user\RoleStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -45,10 +45,10 @@ class Role extends MemoryLimitConstraintBase implements ContainerFactoryPluginIn
    *   The plugin implementation definition.
    * @param \Drupal\user\RoleStorageInterface $role_storage
    *   The role storage.
-   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user account.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RoleStorageInterface $role_storage, AccountProxyInterface $current_user) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RoleStorageInterface $role_storage, AccountInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->roleStorage = $role_storage;
     $this->current_user = $current_user;
