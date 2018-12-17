@@ -102,6 +102,13 @@ class MemoryLimitPolicy extends ConfigEntityBase implements MemoryLimitPolicyInt
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getWeight() {
+    return $this->weight;
+  }
+
+  /**
    * Return the constraints from the policy.
    *
    * @return array
