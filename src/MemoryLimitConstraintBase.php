@@ -2,8 +2,8 @@
 
 namespace Drupal\memory_limit_policy;
 
-use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**

@@ -40,8 +40,13 @@ class Path extends MemoryLimitConstraintBase {
    * {@inheritdoc}
    */
   public function getSummary() {
-    // @TODO: Display a summary of the paths.
-    return $this->t('Paths: @paths', ['@paths' => '@TODO']);
+    $paths = explode(PHP_EOL, $this->configuration['paths']);
+    array_walk($paths, function (&$path) {
+      $path = rtrim(trim(trim($path, "\r"), '/'), '/');
+    });
+    $paths = implode(', ', $paths);
+
+    return $this->t('Paths: @paths', ['@paths' => $paths]);
   }
 
   /**
