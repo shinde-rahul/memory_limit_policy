@@ -4,4 +4,4 @@ package: Performance
 type: module
 core: 8.x
 dependencies:
-  - memory_limit_policy
+  - memory_limit_policy:memory_limit_policy

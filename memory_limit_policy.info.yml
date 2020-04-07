@@ -4,6 +4,5 @@ package: Performance
 type: module
 core: 8.x
 dependencies:
-  - ctools
-
+  - ctools:ctools
 configure: entity.memory_limit_policy.collection
