@@ -9,7 +9,7 @@ use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\user\SharedTempStoreFactory;
+use Drupal\Core\TempStore\SharedTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -50,13 +50,13 @@ class ConstraintEdit extends FormBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('user.shared_tempstore'), $container->get('plugin.manager.memory_limit_policy.memory_limit_constraint'));
+    return new static($container->get('tempstore.shared'), $container->get('plugin.manager.memory_limit_policy.memory_limit_constraint'));
   }
 
   /**
    * Overriding the constructor to load in the plugin manager and tempstore.
    *
-   * @param \Drupal\user\SharedTempStoreFactory $tempstore
+   * @param \Drupal\Core\TempStore\SharedTempStoreFactory $tempstore
    *   The tempstore of the wizard form.
    * @param \Drupal\Component\Plugin\PluginManagerInterface $manager
    *   The plugin manager for the memory limit constraints.
