@@ -2,14 +2,14 @@
 
 namespace Drupal\memory_limit_policy;
 
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
+use Drupal\Component\Plugin\ConfigurableInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
 
 /**
  * An interface to define the expected operations of a memory limit constraint.
  */
-interface MemoryLimitConstraintInterface extends PluginInspectionInterface, ConfigurablePluginInterface, PluginFormInterface {
+interface MemoryLimitConstraintInterface extends PluginInspectionInterface, ConfigurableInterface, PluginFormInterface {
 
   /**
    * Returns a translated string for the constraint title.
