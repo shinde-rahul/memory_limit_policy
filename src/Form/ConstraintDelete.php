@@ -6,7 +6,7 @@ use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\ConfirmFormHelper;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\user\SharedTempStoreFactory;
+use Drupal\Core\TempStore\SharedTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -17,7 +17,7 @@ class ConstraintDelete extends ConfirmFormBase {
   /**
    * Temp store to maintain state between steps of the wizard.
    *
-   * @var \Drupal\user\SharedTempStoreFactory
+   * @var \Drupal\Core\TempStore\SharedTempStoreFactory
    */
   protected $tempstore;
 
@@ -46,13 +46,13 @@ class ConstraintDelete extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('user.shared_tempstore'));
+    return new static($container->get('tempstore.shared'));
   }
 
   /**
    * Constructor that adds the tempstore from the container for wizard.
    *
-   * @param \Drupal\user\SharedTempStoreFactory $tempstore
+   * @param \Drupal\Core\TempStore\SharedTempStoreFactory $tempstore
    *   The tempstore of the wizard form.
    */
   public function __construct(SharedTempStoreFactory $tempstore) {
