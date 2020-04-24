@@ -23,7 +23,7 @@ class Path extends MemoryLimitConstraintBase {
     $form['paths'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Paths'),
-      '#description' => $this->t('Enter one path per line.'),
+      '#description' => $this->t('Enter one path per line. Use \'*\' character as wildcard to target multiple pages (e.g "/node/*/edit" for all the node edit pages)'),
       '#default_value' => $this->getConfiguration()['paths'] ?? '',
     ];
     return $form;
