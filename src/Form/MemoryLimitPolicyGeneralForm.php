@@ -4,6 +4,7 @@ namespace Drupal\memory_limit_policy\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 /**
  * The general settings of the policy not tied to constraints.
@@ -28,7 +29,10 @@ class MemoryLimitPolicyGeneralForm extends FormBase {
     $form['memory'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Memory'),
-      '#description' => $this->t('The memory to set with this policy. Please add the unit too. (128M, 1G, ...)'),
+      '#description' => $this->t(
+        'The memory to set with this policy. Please add the unit too (see <a href="@url-doc">PHP documentation</a> for the expected directive format).',
+        ['@url-doc' => Url::fromUri('https://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes')->toString()]
+      ),
       '#default_value' => $policy->getMemory(),
       '#size' => 8,
     ];
@@ -46,9 +50,11 @@ class MemoryLimitPolicyGeneralForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    // @TODO: Validate the memory is a valid value.
-
     parent::validateForm($form, $form_state);
+
+    if (!preg_match('#(^[\d]+[K|M|G])#', $form_state->getValue('memory'))) {
+      $form_state->setError($form['memory'], $this->t('The given memory is not valid.'));
+    }
   }
 
   /**
