@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Install, uninstall and update hooks for Memory Limit Policy Path module.
+ */
+
+/**
+ * Implements hook_update().
+ *
+ * Update the existing policies which use the path plugin to add forward slash.
+ */
+function memory_limit_policy_path_update_8001() {
+  foreach (\Drupal::entityTypeManager()->getStorage('memory_limit_policy')->loadMultiple() as $policy) {
+
+    $constraints = $policy->getConstraints();
+    foreach ($constraints as &$constraint) {
+      // We only update the "path" constraints.
+      if ($constraint['id'] == 'path') {
+        $paths = [];
+        $updated = FALSE;
+        foreach (explode(PHP_EOL, $constraint['paths']) as $path) {
+          // We add a forward slash if there is none and if it does not start
+          // with a wildcard.
+          if (!in_array($path[0], ['/', '*'])) {
+            $path = '/' . $path;
+            $updated = TRUE;
+          }
+          $paths[] = $path;
+        }
+
+        // Log the constraint update for visibility.
+        if ($updated) {
+          $original_paths = explode(PHP_EOL, $constraint['paths']);
+          array_walk($original_paths, function (&$path) {
+            $path = rtrim(trim($path, "\r"), '/');
+          });
+          $updated_paths = $paths;
+          array_walk($updated_paths, function (&$path) {
+            $path = rtrim(trim($path, "\r"), '/');
+          });
+
+          \Drupal::logger('memory_limit_policy_path')->info(
+            'The path constraint of policy "@policy_machine_name" has been updated from "@original_paths" to "@updated_paths".',
+            [
+              '@policy_machine_name' => $policy->id(),
+              '@original_paths' => implode(', ', $original_paths),
+              '@updated_paths' => implode(', ', $updated_paths),
+            ]
+          );
+        }
+        $constraint['paths'] = implode(PHP_EOL, $paths);
+      }
+    }
+    $policy->set('policy_constraints', $constraints);
+    $policy->save();
+  }
+}
