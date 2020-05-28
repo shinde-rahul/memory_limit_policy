@@ -28,6 +28,15 @@ use Drupal\memory_limit_policy\MemoryLimitPolicyInterface;
  *     }
  *   },
  *   config_prefix = "memory_limit_policy",
+ *   config_export = {
+ *     "id" = "id",
+ *     "label" = "label",
+ *     "status" = "status",
+ *     "weight" = "weight",
+ *     "memory" = "memory",
+ *     "langcode" = "langcode",
+ *     "policy_constraints" = "policy_constraints"
+ *   },
  *   admin_permission = "administer site configuration",
  *   entity_keys = {
  *     "id" = "id",
