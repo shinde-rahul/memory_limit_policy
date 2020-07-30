@@ -41,8 +41,8 @@ class Drush extends MemoryLimitConstraintBase {
    */
   public function getSummary() {
     $drush_commands = explode(PHP_EOL, $this->configuration['drush_commands']);
-    array_walk($drush_commands, function (&$path) {
-      $path = rtrim(trim($path, "\r"), '/');
+    array_walk($drush_commands, function (&$drush_command) {
+      $drush_command = rtrim(trim($drush_command, "\r"), '/');
     });
     $drush_commands = implode(', ', $drush_commands);
 
@@ -53,7 +53,10 @@ class Drush extends MemoryLimitConstraintBase {
    * {@inheritdoc}
    */
   public function evaluate() {
-    return parent::evaluate();
+    if (PHP_SAPI === 'cli') {
+      // stuff with the cli.
+    }
+    return FALSE;
   }
 
 }
