@@ -23,7 +23,7 @@ class Drush extends MemoryLimitConstraintBase {
     $form['drush_commands'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Drush Commands'),
-      '#description' => $this->t('Enter one command per line.'),
+      '#description' => $this->t('Enter one drush command per line.'),
       '#default_value' => $this->getConfiguration()['drush_commands'] ?? '',
     ];
     return $form;
@@ -53,9 +53,8 @@ class Drush extends MemoryLimitConstraintBase {
    * {@inheritdoc}
    */
   public function evaluate() {
-    if (PHP_SAPI === 'cli') {
-      // stuff with the cli.
-    }
+    // For Drush constraints we are not evaluating anything here. So this
+    // will always return FALSE for clients other than CLI.
     return FALSE;
   }
 
