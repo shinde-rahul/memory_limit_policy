@@ -1,0 +1,6 @@
+services:
+  memory_limit_policy_drush.commands:
+    class: \Drupal\memory_limit_policy_drush\Commands\MemoryLimitPolicyCommands
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: drush.command }
